@@ -28,11 +28,16 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping
+    public void createUser(@RequestBody UserEntity user) {
+        userService.saveEntry(user);
+    }
+
     @PutMapping("/{username}")
     public ResponseEntity<UserEntity> updateUser(@RequestBody @Valid UserEntity user, @PathVariable String username) {
         System.out.println("Updating user with username: " + username);
 
-        UserEntity userInDb = userService.findByUserName(username);
+        UserEntity userInDb = userService.findByUserName(user.getUsername());
         if (userInDb!= null) {
             System.out.println("User found: " + userInDb);
 
@@ -48,49 +53,8 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-//    @PutMapping("/{username}")
-//    public ResponseEntity<UserEntity> updateUser(@RequestBody @Valid UserEntity user, @PathVariable String username) {
-//        if (!username.equals(user.getUsername())) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        UserEntity userInDb = userService.findByUserName(username);
-//        if (userInDb != null) {
-//            userInDb.setUsername(user.getUsername());
-//            userInDb.setPassword(user.getPassword());
-//            userService.saveEntry(userInDb);
-//            return new ResponseEntity<>(userInDb, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
-    @PostMapping
-    public ResponseEntity<UserEntity> createUser(@RequestBody @Valid UserEntity userEntity) {
-        try {
-            userService.saveEntry(userEntity);
-            return new ResponseEntity<>(userEntity, HttpStatus.CREATED);
-        } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
 
-//    @GetMapping("/id/{myId}")
-//    public ResponseEntity<UserEntity> getUserEntryById(@PathVariable ObjectId myId) {
-//        Optional<UserEntity> userEntry = UserService.findById(myId);
-//        if (userEntry.isPresent()) {
-//            return new ResponseEntity<>(userEntry.get(), HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
-//    @DeleteMapping("/id/{myId}")
-//    public ResponseEntity<?> deleteUserById(@PathVariable ObjectId myId) {
-//        userService.deleteById(myId);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
 
 
 

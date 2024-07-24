@@ -15,23 +15,23 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public Optional<UserEntity> findById(ObjectId id) {
-        return userRepository.findById(id);
-    }
+    private UserRepository userRepository;
 
     public void saveEntry(UserEntity user) {
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            log.error("exception", e);
+        }
     }
 
     public List<UserEntity> getAll() {
         return userRepository.findAll();
+    }
+
+    public Optional<UserEntity> findById(ObjectId id) {
+        return userRepository.findById(id);
     }
 
     public void deleteById(ObjectId id) {
@@ -40,9 +40,5 @@ public class UserService {
 
     public UserEntity findByUserName(String username) {
         return userRepository.findByUsername(username);
-    }
-
-    public void saveUser(UserEntity user) {
-        userRepository.save(user);
     }
 }
