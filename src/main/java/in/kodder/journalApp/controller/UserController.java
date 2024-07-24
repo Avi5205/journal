@@ -2,9 +2,7 @@ package in.kodder.journalApp.controller;
 
 import in.kodder.journalApp.entity.UserEntity;
 import in.kodder.journalApp.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +32,11 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-    public ResponseEntity<UserEntity> updateUser(@RequestBody @Valid UserEntity user, @PathVariable String username) {
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user, @PathVariable String username) {
         System.out.println("Updating user with username: " + username);
 
-        UserEntity userInDb = userService.findByUserName(user.getUsername());
-        if (userInDb!= null) {
+        UserEntity userInDb = userService.findByUserName(username);
+        if (userInDb != null) {
             System.out.println("User found: " + userInDb);
 
             userInDb.setUsername(user.getUsername());
