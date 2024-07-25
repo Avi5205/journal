@@ -22,7 +22,10 @@ public class UserEntity {
     private String username;
     @NonNull
     private String password;
+    private List<String> roles;
 
     @DBRef
     private List<JournalEntry> journalEntries = new ArrayList<>();
+
+//    cCQ38jsG2Ey1pzZl
 }
