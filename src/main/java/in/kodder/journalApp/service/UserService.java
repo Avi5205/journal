@@ -19,6 +19,7 @@ import java.util.Optional;
 public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Autowired
     private UserRepository userRepository;
 
@@ -55,4 +56,5 @@ public class UserService {
     public UserEntity findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
+
 }

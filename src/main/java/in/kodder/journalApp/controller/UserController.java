@@ -1,6 +1,7 @@
 package in.kodder.journalApp.controller;
 
 import in.kodder.journalApp.entity.UserEntity;
+import in.kodder.journalApp.repository.UserRepository;
 import in.kodder.journalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PutMapping()
     public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user) {
 
@@ -30,6 +34,12 @@ public class UserController {
         userService.saveEntry(userInDb);
         return new ResponseEntity<>(userInDb, HttpStatus.NO_CONTENT);
 
+    }
+
+    public ResponseEntity<?> deleteUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userRepository.deleteByUsername(authentication.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //    @GetMapping
