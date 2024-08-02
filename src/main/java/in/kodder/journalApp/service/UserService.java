@@ -23,7 +23,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveEntry(UserEntity user) {
+    public void saveNewUser(UserEntity user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList("USER"));
@@ -33,7 +33,7 @@ public class UserService {
         }
     }
 
-    public void saveNewUser(UserEntity user) {
+    public void saveUser(UserEntity user) {
         try {
             userRepository.save(user);
         } catch (Exception e) {
