@@ -57,4 +57,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public void saveAdmin(UserEntity user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER", "ADMIN"));
+            userRepository.save(user);
+        } catch (Exception e) {
+            log.error("exception", e);
+        }
+    }
 }

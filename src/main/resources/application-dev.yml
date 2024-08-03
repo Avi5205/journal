@@ -1,0 +1,17 @@
+#spring.application.name=Journal App
+
+#spring.data.mongodb.username=username
+#spring.data.mongodb.password=password
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:cCQ38jsG2Ey1pzZl@cluster0.6eaawkk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journaldb
+      auto-index-creation: true
+  main:
+    allow-circular-references: true
+server:
+  port: 8080
+#  servlet:application.yml
+#    context-path: /journal
